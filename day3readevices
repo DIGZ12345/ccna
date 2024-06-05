@@ -18,9 +18,10 @@ show ip route eigrp
 
 
   !!! configuring redistribution in EDGE router
-
-
-
+conf t
+router eigrp 52
+no auto-summary
+network 10.52.52.0 0.0.0.255
 
   !!! @edge
   config t
