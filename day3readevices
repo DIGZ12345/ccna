@@ -19,9 +19,31 @@ show ip route eigrp
 
   !!! configuring redistribution in EDGE router
 conf t
-router eigrp 52
+ip routing
+router eigrp 52 
 no auto-summary
 network 10.52.52.0 0.0.0.255
+end
+
+conf t
+router ospf 1
+router-id 52.0.0.1
+network 200.0.0.0 0.0.0.255 area 0
+network 52.0.0.1 0.0.0.0 area 0
+end
+
+conf t
+router ospf 1
+redistribute eigrp 52 subnets
+router eigrp 62
+redistribute ospf 1 metric 1000000 1 255 1 1500
+end
+
+eigrp 52 
+no auto-summary
+network 10.52.52.0 0.0.0.255
+end
+
 
   !!! @edge
   config t
