@@ -1,0 +1,31 @@
+!!!configuring in EIGRP for all s/w ccum
+  
+!!! Configuration of Core baba
+config t
+router eigrp 52
+no auto-summary 
+network 10.52.100.0 0.0.0.255
+network 10.52.50.0 0.0.0.255  
+network 10.52.10.0 0.0.0.255
+network 10.52.1.0 0.0.0.255 
+network 10.52.52.0 0.0.0.255
+
+  
+ !!!how to eigrp if working correctly
+show ip eigrp neighbors
+show ip eigrp topology
+show ip route eigrp
+
+
+  !!! configuring redistribution in EDGE router
+
+
+
+
+  !!! @edge
+  config t
+  router ospf 1
+  redistribute eigrp 52 subnets
+  router eigrp 52
+  redistribute ospf 1 Metric 10000000 1 255 1 1500
+  end
