@@ -1,0 +1,412 @@
+
+!
+! Last configuration change at 14:02:43 UTC Mon Jan 2 2006
+! NVRAM config last updated at 14:19:58 UTC Mon Jan 2 2006
+! NVRAM config last updated at 14:19:58 UTC Mon Jan 2 2006
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service udp-small-servers
+service tcp-small-servers
+!
+hostname CUCM-52
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no logging console
+enable secret 5 $1$yvGd$JC2CdBvqwB6wxCAoUuivz1
+!
+no aaa new-model
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+crypto pki token default removal timeout 0
+!
+crypto pki trustpoint TP-self-signed-2174842141
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2174842141
+ revocation-check none
+ rsakeypair TP-self-signed-2174842141
+!
+!
+crypto pki certificate chain TP-self-signed-2174842141
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 32313734 38343231 3431301E 170D3036 30313032 31393137 
+  33315A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 31373438 
+  34323134 3130819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100B562 72FDEE20 18A2DEAA D3E1085A 0399BDB3 A12565DC 3260AFF9 D52E4E06 
+  CBC5880C 2285D6D3 B11732D8 F83A9336 03A3E1F8 4D86E94E B7642D66 AB8CA433 
+  2993C6A8 669A3D9A 421B414E A82D8416 BA6DD513 68BC3988 7BE347D7 B1E024A7 
+  3651EE16 94655D4B 2F4B3169 1AB14647 B9AF916B 69124E1C 15541EFA 9A5A166C 
+  71E90203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603 
+  551D2304 18301680 14B76F99 95B617E0 D78B0D09 EE3D464F 13884CCA B0301D06 
+  03551D0E 04160414 B76F9995 B617E0D7 8B0D09EE 3D464F13 884CCAB0 300D0609 
+  2A864886 F70D0101 05050003 8181000D 362A0E11 EC9B5968 71378A66 B055D384 
+  EDE3E3B7 CB85115E 380FBE35 01E589A4 FEDC816B F0F3F4B8 501EC221 BF6C9A34 
+  264F57DF 0810D521 4CB4949C AE702557 70671EB0 31CF88FC 91BDAC0B 90EB075B 
+  B823D9A0 7DD816AF 0BD95B1F 9CEABB1A D9A88821 64248BA3 FBFE2249 62C26A80 
+  F6AC722D A33D552A 768EBB01 B53BEE
+  	quit
+dot11 syslog
+!
+!
+!
+!
+!
+no ip domain lookup
+ip host pc 10.52.1.10
+ip host cm 10.52.100.8
+ip host cm2 10.52.100.9
+ip host p1 10.52.100.103
+ip host p2 10.52.100.104
+ip host c6 10.52.50.6
+ip host c8 10.52.50.8
+ip host sw 10.52.1.4
+ip host ed 10.52.52.1
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+voice service voip
+ ip address trusted list
+  ipv4 0.0.0.0 0.0.0.0
+ h323
+  call start slow
+!
+!
+!
+!
+!
+voice-card 0
+!
+!
+!
+license udi pid C1861-UC-4FXO-K9 sn FTX140780GH
+!
+!
+ip finger 
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 10.52.100.8 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface Integrated-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface FastEthernet0/1/0
+ no ip address
+!
+interface FastEthernet0/1/1
+ no ip address
+!
+interface FastEthernet0/1/2
+ no ip address
+!
+interface FastEthernet0/1/3
+ no ip address
+!
+interface FastEthernet0/1/4
+ no ip address
+!
+interface FastEthernet0/1/5
+ no ip address
+!
+interface FastEthernet0/1/6
+ no ip address
+!
+interface FastEthernet0/1/7
+ no ip address
+!
+interface FastEthernet0/1/8
+ no ip address
+!
+interface FastEthernet0/2/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/2/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+!
+!
+router eigrp 52
+ network 10.52.100.0 0.0.0.255
+!
+ip forward-protocol nd
+ip http server
+ip http secure-server
+!
+!
+ip dns server
+ip route 0.0.0.0 0.0.0.0 10.52.100.4
+!
+ip access-list extended fwpolicy1
+ permit tcp any host 10.52.100.8 eq domain
+ permit tcp any host 10.52.100.8 eq 22
+ permit tcp any host 10.52.100.8 eq 2000
+ permit tcp any host 10.52.100.9 eq www
+ permit tcp any host 10.52.100.9 eq 443
+ip access-list extended fwpolicy2
+ permit tcp any host 10.52.100.8 eq www
+ permit tcp any host 10.52.100.8 eq 22
+ permit tcp any host 10.52.100.9 eq telnet
+ permit tcp any host 10.52.100.9 eq 443
+ permit tcp any host 10.52.100.9 eq domain
+ip access-list extended fwpolicy3
+ permit icmp any host 10.52.100.8
+ permit tcp any host 10.52.100.8 eq 2000
+ permit tcp any host 10.52.100.9 eq 22
+ permit tcp any host 10.52.100.9 eq www
+ permit tcp any host 10.52.100.9 eq domain
+ permit tcp any host 10.52.100.9 eq finger
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+voice-port 0/0/0
+!
+voice-port 0/0/1
+!
+voice-port 0/0/2
+!
+voice-port 0/0/3
+!
+voice-port 0/1/0
+!
+voice-port 0/1/1
+!
+voice-port 0/1/2
+!
+voice-port 0/1/3
+!
+voice-port 0/4/0
+ auto-cut-through
+ signal immediate
+ input gain auto-control
+ description Music On Hold Port
+!
+!
+!
+mgcp profile default
+!
+!
+dial-peer voice 1 pots
+ destination-pattern 5200
+ port 0/0/0
+!
+dial-peer voice 2 pots
+ destination-pattern 5201
+ port 0/0/1
+!
+dial-peer voice 3 pots
+ destination-pattern 5202
+ port 0/0/2
+!
+dial-peer voice 4 pots
+ destination-pattern 5203
+ port 0/0/3
+!
+dial-peer voice 11 voip
+ destination-pattern 11..
+ session target ipv4:10.11.100.8
+ codec g711ulaw
+!
+dial-peer voice 12 voip
+ destination-pattern 12..
+ session target ipv4:10.12.100.8
+ codec g711ulaw
+!
+dial-peer voice 21 voip
+ destination-pattern 21..
+ session target ipv4:10.21.100.8
+ codec g711ulaw
+!
+dial-peer voice 22 voip
+ destination-pattern 22..
+ session target ipv4:10.22.100.8
+ codec g711ulaw
+!
+dial-peer voice 31 voip
+ destination-pattern 31..
+ session target ipv4:10.31.100.8
+ codec g711ulaw
+!
+dial-peer voice 32 voip
+ destination-pattern 32..
+ session target ipv4:10.32.100.8
+ codec g711ulaw
+!
+dial-peer voice 41 voip
+ destination-pattern 41..
+ session target ipv4:10.41.100.8
+ codec g711ulaw
+!
+dial-peer voice 42 voip
+ destination-pattern 42..
+ session target ipv4:10.42.100.8
+ codec g711ulaw
+!
+dial-peer voice 51 voip
+ destination-pattern 51..
+ session target ipv4:10.51.100.8
+ codec g711ulaw
+!
+dial-peer voice 61 voip
+ destination-pattern 61..
+ session target ipv4:10.61.100.8
+ codec g711ulaw
+!
+dial-peer voice 62 voip
+ destination-pattern 62..
+ session target ipv4:10.62.100.8
+ codec g711ulaw
+!
+dial-peer voice 71 voip
+ destination-pattern 71..
+ session target ipv4:10.71.100.8
+ codec g711ulaw
+!
+dial-peer voice 72 voip
+ destination-pattern 72..
+ session target ipv4:10.72.100.8
+ codec g711ulaw
+!
+dial-peer voice 81 voip
+ destination-pattern 81..
+ session target ipv4:10.81.100.8
+ codec g711ulaw
+!
+dial-peer voice 82 voip
+ destination-pattern 82..
+ session target ipv4:10.82.100.8
+ codec g711ulaw
+!
+!
+!
+!
+telephony-service
+ no auto-reg-ephone
+ max-ephones 5
+ max-dn 20
+ ip source-address 10.52.100.8 port 2000
+ max-conferences 4 gain -6
+ transfer-system full-consult
+ create cnf-files version-stamp 7960 Jan 02 2006 13:56:11
+!
+!
+ephone-dn  1
+ number 5211
+!
+!
+ephone-dn  2
+ number 5222
+!
+!
+ephone-dn  3
+ number 5233
+!
+!
+ephone-dn  4
+ number 5244
+!
+!
+ephone-dn  5
+ number 5255
+!
+!
+ephone-dn  6
+ number 5266
+!
+!
+ephone-dn  7
+ number 5277
+!
+!
+ephone-dn  8
+ number 5288
+!
+!
+ephone  1
+ device-security-mode none
+ video
+ mac-address 8478.ACED.5847
+ max-calls-per-button 3
+ busy-trigger-per-button 2
+ type 8945
+ button  1:1 2:3 3:2 4:4
+!
+!
+!
+ephone  2
+ device-security-mode none
+ video
+ mac-address CCD8.C1FB.16F3
+ max-calls-per-button 3
+ busy-trigger-per-button 2
+ type 8945
+ button  1:5 2:6 3:7 4:8
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ password 7 0216054818
+ login
+line aux 0
+line 2
+ no activation-character
+ no exec
+ transport preferred none
+ transport input all
+ transport output pad telnet rlogin lapb-ta mop udptn v120 ssh
+line vty 0 4
+ exec-timeout 0 0
+ password 7 044B0A151C
+ login
+ transport input all
+line vty 5 14
+ exec-timeout 0 0
+ password 7 044B0A151C
+ login
+ transport input all
+!
+end
