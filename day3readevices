@@ -1,5 +1,11 @@
 !!configuring in EIGRP for all s/w ccum
-  
+@CM
+conf t
+router eigrp 52
+no auto-summary
+network 10.52.100.0 0.0.0.255
+end
+
 !!! Configuration of Core baba
 config t
 router eigrp 52
@@ -35,7 +41,7 @@ end
 conf t
 router ospf 1
 redistribute eigrp 52 subnets
-router eigrp 62
+router eigrp 52
 redistribute ospf 1 metric 1000000 1 255 1 1500
 end
 
